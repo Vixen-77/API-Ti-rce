@@ -1,0 +1,6 @@
+@APITièrce_HostAddress = http://localhost:5118
+
+GET {{APITièrce_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
