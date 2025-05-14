@@ -10,7 +10,6 @@ using System.Text;
 using WEBAPPP.DTOs;
 
 
-
 namespace WEBAPPP.Services;
 
     public class CGMService{
@@ -36,7 +35,12 @@ namespace WEBAPPP.Services;
                 battry = 1
 
             };
-
+           var patient = await _context.Patientss.FirstOrDefaultAsync(p => p.UID == idPatient);
+            if (patient == null)
+            {
+            throw new Exception("Patient non trouvé.");
+            }
+            patient.IdCGMP = newCGM.IdCGM;
             _context.CGMs.Add(newCGM);
             await _context.SaveChangesAsync();
 

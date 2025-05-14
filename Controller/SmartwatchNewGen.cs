@@ -16,7 +16,7 @@ namespace WEBAPPP.Controllers
         }
 
         [HttpPost("createSmartwatchNewGen")]
-        public async Task<IActionResult> CreateSmartwatchNewGen([FromRoute] Guid idPatient)
+        public async Task<IActionResult> CreateSmartwatchNewGen([FromBody] Guid idPatient)
         {
             try
             {

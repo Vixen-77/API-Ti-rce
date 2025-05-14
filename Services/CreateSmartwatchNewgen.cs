@@ -19,7 +19,7 @@ namespace WEBAPPP.Services
             _context = context;
         }
 
-        public async Task<CreationSmartwatch> CreateSmartwatchNewGenAsync(Guid idPatient)
+        public async Task<CreationOBJ> CreateSmartwatchNewGenAsync(Guid idPatient)
         {
             var newSmartwatch = new SmartwatchNewGen
             {
@@ -44,12 +44,17 @@ namespace WEBAPPP.Services
                 Timestamp = DateTimeOffset.UtcNow,
               //  IpAdress = "0.0.0.0" // par défaut // a melinda de faire sa 
             };
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(p => p.UID == idPatient);
+            if (patient == null)
+            {
+            throw new Exception("Patient non trouvé.");
+            }
+            patient.IdSmartwatchNewGenP = newSmartwatch.IdSmartwatchNewGen;
             _context.SmartwatchNewGens.Add(newSmartwatch);
             await _context.SaveChangesAsync();
-            return new CreationSmartwatch {
+            return new CreationOBJ{
                 
-                IdSmartwatchEnvoi = newSmartwatch.IdSmartwatchNewGen.ToString(),
+                IdOBJEnvoi = newSmartwatch.IdSmartwatchNewGen.ToString(),
                 AdrMac = newSmartwatch.ADRMAC
                 //rajouter IP
             };

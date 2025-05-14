@@ -39,7 +39,12 @@ namespace WEBAPPP.Services;
                 Longitude = 0,
                 Timestamp = DateTimeOffset.UtcNow
             };
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(p => p.UID == idPatient);
+            if (patient == null)
+            {
+                throw new Exception("Patient non trouvé.");
+            }
+            patient.IdSmartwatchP = newSmartwatch.IdSmartwatch;
             _context.Smartwatches.Add(newSmartwatch);
             await _context.SaveChangesAsync();
 
