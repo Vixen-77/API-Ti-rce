@@ -30,10 +30,10 @@ namespace WEBAPPP.Services;
                 idporteur = idPatient,
                 ADRMAC = GenerateMacAddress(idPatient),
                 isGlyhigh = false,
-                isGlyLow= false,
+                isGlyLow = false,
                 Glycemia = 0,
-                battry = 1
-
+                battry = 1,
+                IsConnected= true,
             };
            var patient = await _context.Patientss.FirstOrDefaultAsync(p => p.UID == idPatient);
             if (patient == null)
@@ -50,12 +50,15 @@ namespace WEBAPPP.Services;
                 AdrMac = newCGM.ADRMAC
             };
         }
+        
+
+
         private string GenerateMacAddress(Guid id)
-        {
-            // On utilise le Guid pour générer une pseudo adresse MAC unique
-            var bytes = id.ToByteArray();
-            return string.Join(":", bytes.Take(6).Select(b => b.ToString("X2")));
-        }
+    {
+        // On utilise le Guid pour générer une pseudo adresse MAC unique
+        var bytes = id.ToByteArray();
+        return string.Join(":", bytes.Take(6).Select(b => b.ToString("X2")));
+    }
 
 
     }

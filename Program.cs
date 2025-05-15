@@ -14,6 +14,7 @@ using System;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.Extensions;
 using Swashbuckle.AspNetCore.Filters;
+using WEBAPPP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,30 +33,39 @@ builder.WebHost.UseUrls(appUrl);*/
 
 
 
-    //ingnoré le warning du chiffrement 
+//ingnoré le warning du chiffrement 
 //builder.Configuration.AddEnvironmentVariables();// Maintenant, il peut utiliser IEmailService
+
+Env.Load("C:\\Users\\HP\\Documents\\L3\\PFE\\PFE-API-PRINCIPAL\\.env");
+var appUrl = Env.GetString("API2_URL"); 
+var reactAppUrl = Env.GetString("REACT_URL");
+
+
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<SmartwatchNewGenService>();
+builder.Services.AddScoped<SmartwatchService>();
+builder.Services.AddScoped<CGMService>();
+
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 builder.Logging.AddConsole();
 
 
-
-
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-       policy => policy.WithOrigins()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://192.168.1.102:8081")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
+
 
          var app = builder.Build(); // ICI on fige le service !
 

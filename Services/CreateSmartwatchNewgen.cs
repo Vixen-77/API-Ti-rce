@@ -29,6 +29,7 @@ namespace WEBAPPP.Services
                 Marque = "DefaultBrandNewGen",
                 Modele = "DefaultModelNewGen",
                 Heart_Rate = null,
+                IpAdress= GenerateIPAddress(idPatient),
                 Respiratory_Rate = null,
                 Body_Temperature = null,
                 Oxygen_Saturation = null,

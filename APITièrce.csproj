@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PFE3.0\Library-SSMS\Library-SSMS\Library-SSMS.csproj" />
+    <ProjectReference Include="C:\Users\HP\Documents\L3\PFE\libSSMS\LibrarySQLserveurExpress\Library-SSMS.csproj" />
   </ItemGroup>
 
 </Project>
