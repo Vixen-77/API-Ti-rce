@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 using WEBAPPP.Services;
+using Microsoft.Extensions.Caching.Memory;
+using WEBAPPP.Interface;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,10 +39,12 @@ builder.WebHost.UseUrls(appUrl);*/
 //ingnoré le warning du chiffrement 
 //builder.Configuration.AddEnvironmentVariables();// Maintenant, il peut utiliser IEmailService
 
-Env.Load("C:\\Users\\HP\\Documents\\L3\\PFE\\PFE-API-PRINCIPAL\\.env");
-var appUrl = Env.GetString("API2_URL"); 
+Env.Load("C:\\Users\\HP\\Documents\\L3\\PFE\\API3\\API-Ti-rce\\.env");
+var appUrl = Env.GetString("API3_URL"); 
 var reactAppUrl = Env.GetString("REACT_URL");
 
+
+builder.WebHost.UseUrls(appUrl);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
@@ -48,7 +53,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SmartwatchNewGenService>();
 builder.Services.AddScoped<SmartwatchService>();
+builder.Services.AddScoped<IAnomalyDetectionServiceMel,AnomalyDetectionServiceMel>();
+builder.Services.AddScoped<ISmsService,SmsService>();
 builder.Services.AddScoped<CGMService>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -116,6 +124,7 @@ app.UseAuthentication(); // Toujours avant Authorization
 app.UseAuthorization();
 app.MapControllers(); // API classiques
 app.MapGet("/", () => "Hello, ASP.NET Core APITierce! Répond parfaitement!");
+
 
 app.Run();
 

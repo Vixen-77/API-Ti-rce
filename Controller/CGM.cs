@@ -33,7 +33,11 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+             if (patient == null)
+            {
+            return NotFound("Patient non trouvé.");
+            }
             var CGM = await _context.CGMs.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (CGM == null)
             {
@@ -65,7 +69,11 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+            if (patient == null)
+            {
+            return NotFound("Patient non trouvé.");
+            }
             var CGM = await _context.CGMs.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (CGM == null)
             {
@@ -88,11 +96,15 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+             if (patient == null)
+            {
+            return NotFound("Patient non trouvé.");
+            }
             var CGM = await _context.CGMs.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (CGM == null)
             {
-                return NotFound("CGM non trouvé pour ce patient.");
+                return Ok("CGM non trouvé pour ce patient.");
             }
             else
             {   

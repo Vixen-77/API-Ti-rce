@@ -30,6 +30,11 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+        if (patient == null)
+        {
+            return NotFound("Patient non trouvé.");
+        }
             var smartwatchNG = await _context.SmartwatchNewGens.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (smartwatchNG == null)
             {
@@ -61,7 +66,11 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+        if (patient == null)
+        {
+            return NotFound("Patient non trouvé.");
+        }
             var smartwatchNG = await _context.SmartwatchNewGens.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (smartwatchNG == null)
             {
@@ -84,11 +93,15 @@ namespace WEBAPPP.Controllers
             {
                 return BadRequest("Identifiant du patient invalide.");
             }
-
+            var patient = await _context.Patientss.FirstOrDefaultAsync(m => m.UID == idPatient);
+        if (patient == null)
+        {
+            return NotFound("Patient non trouvé.");
+        }
             var smartwatchNG = await _context.SmartwatchNewGens.FirstOrDefaultAsync(m => m.idporteur == idPatient);
             if (smartwatchNG == null)
             {
-                return NotFound("Smartwatch non trouvé pour ce patient.");
+                return Ok("Smartwatch non trouvé pour ce patient.");
             }
             else
             {
